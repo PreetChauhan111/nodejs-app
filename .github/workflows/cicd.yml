@@ -20,10 +20,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: build docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/nodejs-app .
+        run: docker build -t preetchauhan/nodejs-app .
 
       - name: push docker image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/nodejs-app:latest
+        run: docker push preetchauhan/nodejs-app:latest
       
   deploy:
     needs: build
@@ -31,10 +31,10 @@ jobs:
 
     steps:
       - name: pull docker image
-        run: docker pull ${{ secrets.DOCKER_USERNAME }}/nodejs-app:latest 
+        run: docker pull preetchauhan/nodejs-app:latest 
       
       - name: delete old docker container
         run: docker rm -f nodejs-app-container || true
 
       - name: run docker container
-        run: docker run -d -p 5000:5000 -name nodejs-app-container:latest ${{ secrets.DOCKER_USERNAME }}/nodejs-app
+        run: docker run -d -p 5000:5000 -name nodejs-app-container:latest preetchauhan/nodejs-app
